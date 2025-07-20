@@ -11,8 +11,9 @@ async def news(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keywords = " ".join(context.args)
 
     await update.message.reply_text(f"Fetching and summarizing news about *{keywords}*...", parse_mode="Markdown")
-    summary = get_summarized_news( keywords)
-    await update.message.reply_text(summary, parse_mode="Markdown")
+    summary = get_summarized_news(keywords)
+    translation= get_translated_news(summary)
+    await update.message.reply_text(summary+"\nTranslated to Arabic: "+translation, parse_mode="Markdown")
 
 def get_summarized_news(keywords):
     # Placeholder: scraping or API + LLM summarization
@@ -20,6 +21,10 @@ def get_summarized_news(keywords):
     #then go to the site, sort by DATE, then scrabe the data
     #else, use the keywords as searching keywords(https://www.aljazeera.com/search/keyword%20keyword%20keyword)
     return f"📰 Here's a fake summary for *{keywords}*. Real content coming soon 😉"
+
+def get_translated_news(context):
+    # Placeholder: translating news using DeepL
+    return "translated text sample"
 
 app = ApplicationBuilder().token(BOT_TOKEN).build()
 app.add_handler(CommandHandler("news", news))
