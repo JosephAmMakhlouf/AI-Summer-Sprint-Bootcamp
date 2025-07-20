@@ -20,12 +20,12 @@ CATEGORIES = ["news", "sports", "economy", "politics", "technology","health", "o
 
 def get_summarized_news(keywords):
     # Placeholder: scraping or API + LLM summarization
-    #else, use the keywords as searching keywords(https://www.aljazeera.com/search/keyword%20keyword%20keyword)
+    # Use the keywords as searching keywords (https://www.aljazeera.com/search/keyword%20keyword%20keyword)
     return f"📰 Here's a fake summary for *{keywords}*. Real content coming soon 😉"
 
 def get_summarized_category_news(category):
     # Use category to search in one of these 2 urls (https://www.aljazeera.com/tag/{category} or https://www.aljazeera.com/{category}
-    #   then go to the site, sort by DATE, then scrabe the data
+    # then go to the site, sort by DATE, then scrabe the data needed
     return f"📰 Here's a fake summary for *{category}*. Real content coming soon 😉"
 
 def get_translated_news(context):
