@@ -88,6 +88,6 @@ Your bot will start polling Telegram for updates.
 
 ## Notes
 
-- The current summarization and translation functions are placeholders. You can implement your own scraping, API calls, or LLM integration.
+- The current summarization and translation functions are placeholders. *MUST BE IMPLEMENTED*
 - The bot loads the token securely from `.env` using `python-dotenv`.
 - Inline keyboards provide interactive category selection.
