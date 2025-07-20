@@ -1,9 +1,17 @@
 from telegram import Update, InlineKeyboardMarkup, InlineKeyboardButton
 from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
 import asyncio
+from dotenv import load_dotenv
+import os
 
-BOT_TOKEN = "7489397285:AAEuClrePs7RByJL3ST0Secrdd8RlQBdGPo"
+# If you have the token, create .env file and write inside it TELEGRAM_BOT_TOKEN={the token}
+# create .gitignore file and write inside it: .env
+
+load_dotenv()  # loads the hidden bot token from .env file
+
+BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")  # read token
 CATEGORIES = ["news", "sports", "economy", "politics", "technology","health", "opinion", "human rights", "palestine", "israel", "gaza", "war", "conflict"]
+
 
 ######################################################################################
 # you can move the below functions to a different file then import it to use it here #
