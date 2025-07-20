@@ -11,10 +11,10 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         "👋 Welcome to the News4LazyDudes Bot!\n\n"
         "Commands:\n"
         "📂 /categories: List all supported categories\n"
-        "🔍 /category [category name]: Search Latest news in a specific category"
+        "🔍 /category [category name]: Search Latest news in a specific category\n"
         "🔍 /search [keywords]: Search for specific keywords\n"
-        "✏️ Example: /category politics"
-        "✏️ Example: /search barcelona vs real madrid"
+        "✏️ Example: /category politics\n"
+        "✏️ Example: /search barcelona vs real madrid\n"
     )
 
 async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
