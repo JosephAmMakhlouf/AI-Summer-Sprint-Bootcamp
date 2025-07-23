@@ -1,0 +1,364 @@
+{
+  "name": "News4LazyDudes",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "a9cf086c-2411-4028-8ea3-e058d4fc2782",
+      "name": "Telegram Trigger",
+      "webhookId": "3d7e50f6-4263-46db-bf04-36f5c49c0a41",
+      "credentials": {
+        "telegramApi": {
+          "id": "paFrl44uXO0BosaS",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/search",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    },
+                    "id": "76e827fc-1312-41a8-ba75-3e50d6ea46da"
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "1bb14a47-7be8-4a28-9d3e-c0ea9266f0a4",
+      "name": "check command"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconsole.log(\"All items:\", items);\n\n// Process each item\nconst results = items.map(item => {\n    const fullText = item.json.message.text;\n    console.log(\"Full message text:\", fullText);\n    \n    // Extract topic by removing the /search command\n    const topic = fullText.replace(\"/search\", \"\").trim();\n    console.log(\"Extracted topic:\", topic);\n    \n    // Ensure we have a valid topic\n    const finalTopic = topic || \"technology\"; // fallback to \"technology\"\n    console.log(\"Final topic:\", finalTopic);\n    \n    return {\n        json: {\n            topic: finalTopic,\n            chat_id: item.json.message.chat.id\n        }\n    };\n});\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        416,
+        0
+      ],
+      "id": "86ba97ab-78f9-4296-bd70-29c08cf9cc32",
+      "name": "Extract Topic"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $json.chat_id }}",
+        "message": "What language would you like the summary in?",
+        "responseType": "customForm",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "what language do you want",
+              "fieldType": "dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "English -en"
+                  },
+                  {
+                    "option": "français -fr"
+                  },
+                  {
+                    "option": "español - es"
+                  },
+                  {
+                    "option": "Deutsch - de"
+                  },
+                  {
+                    "option": "العربية -ar"
+                  }
+                ]
+              },
+              "requiredField": true
+            },
+            {
+              "fieldType": "hiddenField",
+              "fieldName": "topic",
+              "fieldValue": "={{ $('Extract Topic').item.json.topic }}"
+            }
+          ]
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        608,
+        0
+      ],
+      "id": "ff64fbda-5906-4e18-a32e-fc6e321ca904",
+      "name": "Ask lang and wait",
+      "webhookId": "267a1ac2-c055-491f-8fc5-ac660fac5118",
+      "credentials": {
+        "telegramApi": {
+          "id": "paFrl44uXO0BosaS",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.responseData.translatedText }}",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1648,
+        0
+      ],
+      "id": "b84b5cd3-aebf-4114-86da-ed470340897d",
+      "name": "Send a text message",
+      "webhookId": "7e8d664f-4e92-43ab-89fe-51df17fe609f",
+      "credentials": {
+        "telegramApi": {
+          "id": "paFrl44uXO0BosaS",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all items from current node\nconst items = $input.all();\nconst results = items.map((item, index) => {\n  let languageCode = 'en';\n  let topic = 'gaza';\n  let chatId = '6442248083';\n  \n  // Get language from the current item (Ask lang and wait response)\n  try {\n    if (item && item.json && item.json.data) {\n      // Get the selected dropdown value directly\n      const langResponse = item.json.data['what language do you want'] || \n                          item.json.data['what language do you want the summary in?'] ||\n                          item.json.data.language;\n      \n      if (langResponse && typeof langResponse === 'string') {\n        // Extract language code after dash (like \"français -fr\" -> \"fr\")\n        const dashMatch = langResponse.match(/-\\s*(\\w{2,3})\\s*$/);\n        if (dashMatch && dashMatch[1]) {\n          languageCode = dashMatch[1].toLowerCase(); // MyMemory uses lowercase\n        } else {\n          // If no dash format, use the whole value as is (in case it's already a code)\n          languageCode = langResponse.trim().toLowerCase();\n        }\n        \n        // Map your dropdown language codes to MyMemory format\n        const languageMap = {\n          'er': 'en',     // English -er\n          'fr': 'fr',     // français -fr\n          'es': 'es',     // español - es\n          'de': 'de',     // Deutsch - de\n          'ar': 'ar',     // العربية -ar\n          'en': 'en',     // fallback for English\n          // Add more mappings as you add more languages to your dropdown\n        };\n        \n        // Use mapped language code if available, otherwise use the extracted code\n        languageCode = languageMap[languageCode] || languageCode;\n      }\n    }\n  } catch (error) {\n    console.log('Error getting language:', error);\n    // Keep default language\n  }\n  \n  // Get topic from Extract Topic node\n  try {\n    const extractTopicItem = $('Extract Topic').item(index);\n    if (extractTopicItem && extractTopicItem.json && extractTopicItem.json.topic) {\n      topic = extractTopicItem.json.topic;\n    }\n  } catch (error) {\n    console.log('Error getting topic:', error);\n    // Try alternative approach\n    try {\n      const extractTopicItems = $('Extract Topic').all();\n      if (extractTopicItems && extractTopicItems.length > 0 && extractTopicItems[0].json && extractTopicItems[0].json.topic) {\n        topic = extractTopicItems[0].json.topic;\n      }\n    } catch (e) {\n      console.log('Error getting topic (alternative):', e);\n      // Keep default topic\n    }\n  }\n  \n  // Get chat ID from the original trigger or current item\n  try {\n    // First try to get from current item\n    if (item && item.json && item.json.chat_id) {\n      chatId = item.json.chat_id;\n    }\n    // Then try from Telegram Trigger\n    else {\n      const triggerItem = $('Telegram Trigger').item(index);\n      if (triggerItem && triggerItem.json && triggerItem.json.message && triggerItem.json.message.chat && triggerItem.json.message.chat.id) {\n        chatId = triggerItem.json.message.chat.id.toString();\n      }\n    }\n  } catch (error) {\n    console.log('Error getting chat ID:', error);\n    // Keep default chat ID\n  }\n  \n  console.log(`Processing item ${index}: language=${languageCode}, topic=${topic}, chatId=${chatId}`);\n  \n  return {\n    json: {\n      source_lang: 'en',  // Source language (English for your news)\n      target_lang: languageCode,  // Target language for translation\n      langpair: `en|${languageCode}`,  // MyMemory format: source|target\n      language: languageCode,  // Keep this for backward compatibility\n      topic: topic,\n      chat_id: chatId\n    }\n  };\n});\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        816,
+        0
+      ],
+      "id": "2e101fce-f071-4223-8fea-36d339c3e958",
+      "name": "language code"
+    },
+    {
+      "parameters": {
+        "url": "=https://ai-summer-sprint-bootcamp.onrender.com/scrape/{{ $json.topic }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1008,
+        0
+      ],
+      "id": "b99144a8-c7aa-4ee9-8311-e93a1d96711d",
+      "name": "news scraper code"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.cohere.ai/v1/summarize",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer hImsL7YAh19bk0rE6XQg4XxmpY85nqKqVTTWT4ci"
+            },
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "text",
+              "value": "={{$json.content}}"
+            },
+            {
+              "name": "length",
+              "value": "medium"
+            },
+            {
+              "name": "format",
+              "value": "paragraph"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1216,
+        0
+      ],
+      "id": "296602d3-a963-49ec-9591-9c1ac9ea4c01",
+      "name": "cohere summery"
+    },
+    {
+      "parameters": {
+        "url": "https://api.mymemory.translated.net/get",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "={{ $json.summary.substring(0, 500) }}"
+            },
+            {
+              "name": "langpair",
+              "value": "={{ $('language code').item.json.langpair }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1424,
+        0
+      ],
+      "id": "6e79c5be-2d5a-4ffd-be7a-2309852acf0b",
+      "name": "translator"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "check command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check command": {
+      "main": [
+        [
+          {
+            "node": "Extract Topic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Topic": {
+      "main": [
+        [
+          {
+            "node": "Ask lang and wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask lang and wait": {
+      "main": [
+        [
+          {
+            "node": "language code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "language code": {
+      "main": [
+        [
+          {
+            "node": "news scraper code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "news scraper code": {
+      "main": [
+        [
+          {
+            "node": "cohere summery",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "cohere summery": {
+      "main": [
+        [
+          {
+            "node": "translator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "translator": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "99a56b8b-b853-4db2-a058-d701360c101b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "4cfae46d8d9fff2628cd74b09deee5950bcb00f6ac1c2cdaf87acbe00039d154"
+  },
+  "id": "k1pPawHlqaZowwwO",
+  "tags": []
+}
