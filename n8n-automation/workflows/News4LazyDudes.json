@@ -1,5 +1,4 @@
 {
-  "name": "News4LazyDudes",
   "nodes": [
     {
       "parameters": {
@@ -19,8 +18,8 @@
       "webhookId": "3d7e50f6-4263-46db-bf04-36f5c49c0a41",
       "credentials": {
         "telegramApi": {
-          "id": "paFrl44uXO0BosaS",
-          "name": "Telegram account"
+          "id": "ToA7o737Jj9uveFh",
+          "name": "News4LazyDudes"
         }
       }
     },
@@ -49,6 +48,28 @@
                 ],
                 "combinator": "and"
               }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "ead1709a-1c73-417b-a307-c2c48fa3fab9",
+                    "leftValue": "={{ $json.message.text }}",
+                    "rightValue": "/help",
+                    "operator": {
+                      "type": "string",
+                      "operation": "contains"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
             }
           ]
         },
@@ -71,7 +92,7 @@
       "typeVersion": 2,
       "position": [
         416,
-        0
+        -16
       ],
       "id": "86ba97ab-78f9-4296-bd70-29c08cf9cc32",
       "name": "Extract Topic"
@@ -123,7 +144,7 @@
       "typeVersion": 1.2,
       "position": [
         608,
-        0
+        -16
       ],
       "id": "ff64fbda-5906-4e18-a32e-fc6e321ca904",
       "name": "Ask lang and wait",
@@ -138,7 +159,7 @@
     {
       "parameters": {
         "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
-        "text": "={{ $json.responseData.translatedText }}",
+        "text": "={{ $json.final_message }}",
         "additionalFields": {
           "appendAttribution": false
         }
@@ -146,7 +167,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1648,
+        3392,
         0
       ],
       "id": "b84b5cd3-aebf-4114-86da-ed470340897d",
@@ -167,21 +188,21 @@
       "typeVersion": 2,
       "position": [
         816,
-        0
+        -16
       ],
       "id": "2e101fce-f071-4223-8fea-36d339c3e958",
       "name": "language code"
     },
     {
       "parameters": {
-        "url": "=https://ai-summer-sprint-bootcamp.onrender.com/scrape/{{ $json.topic }}",
+        "url": "=https://ai-summer-sprint-bootcamp.onrender.com/scrape/{{ $('Extract Topic').item.json.topic }}",
         "options": {}
       },
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1008,
-        0
+        1472,
+        -16
       ],
       "id": "b99144a8-c7aa-4ee9-8311-e93a1d96711d",
       "name": "news scraper code"
@@ -225,8 +246,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1216,
-        0
+        1920,
+        -32
       ],
       "id": "296602d3-a963-49ec-9591-9c1ac9ea4c01",
       "name": "cohere summery"
@@ -252,14 +273,266 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        1424,
-        0
+        2448,
+        176
       ],
       "id": "6e79c5be-2d5a-4ffd-be7a-2309852acf0b",
       "name": "translator"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "ead0f58e-3569-4643-b948-d3e63b1faf45",
+              "leftValue": "={{ $('language code').item.json.target_lang }}",
+              "rightValue": "en",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2128,
+        -32
+      ],
+      "id": "62fe35e3-5e33-4442-9ae0-bf6413a8b877",
+      "name": "check if eng"
+    },
+    {
+      "parameters": {
+        "jsCode": "// Get all input items\nconst items = $input.all();\n\n// Process each item\nconst results = items.map(item => {\n  return {\n    json: {\n      responseData: {\n        translatedText: item.json.summary  // Direct summary without translation\n      },\n      chat_id: item.json.chat_id\n    }\n  };\n});\n\nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2432,
+        -128
+      ],
+      "id": "173dd0bd-5af0-416c-9f0c-0f5b7479b6e2",
+      "name": "eng format"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "=`🤖 *News Bot Help*\n\nHere's what I can do:\n\n📰 *Get News Summary*\n- Type: /search [topic]\n- Example: /search technology\n- Example: /search gaza\n- Example: /search climate change\n\n🌍 *Available Languages*\n- English\n- Français (French)\n- Español (Spanish)\n- Deutsch (German)\n- العربية (Arabic)\n\n💡 *How it works:*\n1. Send /search [your topic]\n2. Choose your preferred language\n3. Get a summarized news update!\n\nNeed help? Just type /help anytime! 😊`",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        416,
+        176
+      ],
+      "id": "93fc6c77-467e-4459-b71b-5e667410a48f",
+      "name": "/help message",
+      "webhookId": "cbc0cc48-4dc7-4e17-bc63-e72d2b6c1205",
+      "credentials": {
+        "telegramApi": {
+          "id": "ToA7o737Jj9uveFh",
+          "name": "News4LazyDudes"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendChatAction",
+        "chatId": "={{ $json.chat_id }}"
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1024,
+        -16
+      ],
+      "id": "724adea1-ca9c-4ce3-bf7c-bc7c89bad608",
+      "name": "Typing Indicator",
+      "webhookId": "6580e2e0-0925-415f-91c0-295ba8f52a3b",
+      "credentials": {
+        "telegramApi": {
+          "id": "ToA7o737Jj9uveFh",
+          "name": "News4LazyDudes"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=🔍 Searching for latest news about \"{{ $('Extract Topic').item.json.topic }}\"...\n\nPlease wait while I gather the information! 📰",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1232,
+        -16
+      ],
+      "id": "ce7c4b72-84f1-4429-a539-e20116d6dd6c",
+      "name": "Send a text message1",
+      "webhookId": "7d2359b7-e95e-487e-80c9-8f68e47e52e5",
+      "credentials": {
+        "telegramApi": {
+          "id": "paFrl44uXO0BosaS",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "76d00cb3-223c-4ffa-908a-e14e099abeb4",
+              "leftValue": "={{ $json.content }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            },
+            {
+              "id": "14cbcdbf-637d-4459-8f89-0c831c27229c",
+              "leftValue": "={{ $json.content ? $json.content.length : 0 }}",
+              "rightValue": 10,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "fc2f7132-e24c-460f-b23e-3d22455e3513",
+              "leftValue": "={{ $json.content }}",
+              "rightValue": "No articles found",
+              "operator": {
+                "type": "string",
+                "operation": "notContains"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1680,
+        -16
+      ],
+      "id": "9acb9cc7-6599-4a29-ab2d-ea07cf8aa1da",
+      "name": "Check Content Exists"
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "=❌ Sorry, I couldn't find any recent news about \"{{ $('Extract Topic').item.json.topic }}\" on Al Jazeera.\n\n🔍 Suggestions:\n• Try a different search term\n• Check the spelling  \n• Try a more general topic\n\nType /help for more information! 📰",
+        "additionalFields": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        1936,
+        160
+      ],
+      "id": "c75ed8bc-6f75-466d-be06-6056ed1c2b4b",
+      "name": "Send Error Message",
+      "webhookId": "6f599ca2-e788-429b-9013-6096d6fc3159",
+      "credentials": {
+        "telegramApi": {
+          "id": "paFrl44uXO0BosaS",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://news-sentiment-classifier-production.up.railway.app/predict",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { \"text\": $json.responseData.translatedText } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2704,
+        0
+      ],
+      "id": "0a3b09f4-023e-4d69-9175-bae05c5533e1",
+      "name": "Sentiment Analysis"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0eb36eba-2a5e-41b3-b14e-41a648a2e0ef",
+              "name": "final_message",
+              "value": "={{ $json.label === 'positive' ? '😊 I GOT POSITIVE NEWS FOR YOU!\\n\\n' : $json.label === 'negative' ? '😔 I GOT NEGATIVE NEWS FOR YOU!\\n\\n' : '📰 HERE\\'S YOUR NEWS UPDATE!\\n\\n' }}{{ $('translator').item.json.responseData.translatedText || $('eng format').item.json.responseData.translatedText }}",
+              "type": "string"
+            },
+            {
+              "id": "68bb917a-2345-4a95-a424-9e9c73a4f7e9",
+              "name": "chat_id",
+              "value": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+              "type": "string"
+            },
+            {
+              "id": "b03f133e-3188-4365-a014-a4b7f66f30f7",
+              "name": "",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2912,
+        0
+      ],
+      "id": "ea655ab8-9d39-48b5-8e6f-3fb95b5aa145",
+      "name": "positive or negative message"
     }
   ],
-  "pinData": {},
   "connections": {
     "Telegram Trigger": {
       "main": [
@@ -277,6 +550,13 @@
         [
           {
             "node": "Extract Topic",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "/help message",
             "type": "main",
             "index": 0
           }
@@ -305,11 +585,16 @@
         ]
       ]
     },
+    "Send a text message": {
+      "main": [
+        []
+      ]
+    },
     "language code": {
       "main": [
         [
           {
-            "node": "news scraper code",
+            "node": "Typing Indicator",
             "type": "main",
             "index": 0
           }
@@ -320,7 +605,7 @@
       "main": [
         [
           {
-            "node": "cohere summery",
+            "node": "Check Content Exists",
             "type": "main",
             "index": 0
           }
@@ -331,7 +616,7 @@
       "main": [
         [
           {
-            "node": "translator",
+            "node": "check if eng",
             "type": "main",
             "index": 0
           }
@@ -339,6 +624,97 @@
       ]
     },
     "translator": {
+      "main": [
+        [
+          {
+            "node": "Sentiment Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "check if eng": {
+      "main": [
+        [
+          {
+            "node": "eng format",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "translator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "eng format": {
+      "main": [
+        [
+          {
+            "node": "Sentiment Analysis",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Typing Indicator": {
+      "main": [
+        [
+          {
+            "node": "Send a text message1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message1": {
+      "main": [
+        [
+          {
+            "node": "news scraper code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Content Exists": {
+      "main": [
+        [
+          {
+            "node": "cohere summery",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Error Message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Sentiment Analysis": {
+      "main": [
+        [
+          {
+            "node": "positive or negative message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "positive or negative message": {
       "main": [
         [
           {
@@ -350,15 +726,9 @@
       ]
     }
   },
-  "active": false,
-  "settings": {
-    "executionOrder": "v1"
-  },
-  "versionId": "99a56b8b-b853-4db2-a058-d701360c101b",
+  "pinData": {},
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "4cfae46d8d9fff2628cd74b09deee5950bcb00f6ac1c2cdaf87acbe00039d154"
-  },
-  "id": "k1pPawHlqaZowwwO",
-  "tags": []
+  }
 }
