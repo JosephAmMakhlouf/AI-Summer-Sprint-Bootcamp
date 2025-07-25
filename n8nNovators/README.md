@@ -1,18 +1,18 @@
-# 📬 Serah – Smart AI Assistant with Gmail, Calendar & Telegram Automation
+# Serah – Smart AI Assistant with Gmail, Calendar & Telegram Automation
 
 **Serah** is an intelligent AI assistant built using **n8n** that automates and streamlines your Gmail, Google Calendar, Google Sheets, and Telegram workflows. It listens to voice or text commands via Telegram and performs tasks such as sending emails, managing events, retrieving contact details, labeling or replying to emails, and more — all with context-aware AI using OpenAI.
 
 ---
 
-## 🌟 Features
+## Features
 
-### 🔊 Conversational AI Assistant (`Serah`)
+### Conversational AI Assistant (`Serah`)
 - Powered by OpenAI (`GPT`) for understanding, reasoning, and responding.
 - Stores chat memory per Telegram user with **Window Buffer Memory**.
 - Responds to voice or text messages intelligently.
 - Fluent in **Lebanese Arabic and English**.
 
-### 📧 Gmail Automation
+### Gmail Automation
 - **Send Emails** based on user prompts.
 - **Reply to Emails** with context-aware responses.
 - **Create Drafts** for later review.
@@ -21,28 +21,28 @@
 - **Delete Emails** by Message ID.
 - **Fetch Labels** from the Gmail account.
 
-### 📆 Google Calendar Management
+### Google Calendar Management
 - Fetches calendar events by date or range.
 - Prevents scheduling conflicts.
 - Can notify users 30 minutes before meetings via email.
 
-### 📄 Google Sheets Integration
+### Google Sheets Integration
 - Retrieves rows from a specific sheet for contact or task-related data.
 - Dynamically queries contact details like email, name, or phone number.
 
-### 🤖 Voice Recognition & Commands
+### Voice Recognition & Commands
 - Supports **audio messages on Telegram**.
 - Automatically downloads and transcribes voice input using **OpenAI Whisper**.
 - Routes to appropriate logic block via `Switch`.
 
-### 🧠 AI Logic & Personalization
+### AI Logic & Personalization
 - Custom system prompt defining detailed assistant behavior.
 - Dynamically pulls data from Google Calendar, Gmail, and Google Sheets.
 - Responds like a smart personal assistant with memory and reasoning.
 
 ---
 
-## 📌 Architecture Overview
+## Architecture Overview
 
 This n8n workflow includes:
 
@@ -63,7 +63,7 @@ This n8n workflow includes:
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### 1. **Requirements**
 - n8n (Cloud or Self-hosted)
@@ -93,7 +93,7 @@ This n8n workflow includes:
 
 ---
 
-## 📊 AI System Prompt Behavior
+## AI System Prompt Behavior
 
 The prompt instructs Serah to:
 - Act like an intelligent personal assistant.
@@ -103,12 +103,12 @@ The prompt instructs Serah to:
 - Sign off emails with:
 
 Regards,
-fatima
+n8nNovators
 
 
 ---
 
-## 🧠 Technical Highlights
+## Technical Highlights
 
 | Module           | Role                                                                 |
 |------------------|----------------------------------------------------------------------|
@@ -121,24 +121,19 @@ fatima
 
 ---
 
-## 🧪 Example Commands
+## Example Commands
 
-- 🗣️ “Send an email to Dr. Ahmad about the syllabus.”
-- 🗣️ “Label all emails from Jad as IMPORTANT.”
-- 🗣️ “What meetings do I have today?”
-- 🗣️ “Draft an email to my team about the upcoming demo.”
-- 🎙️ Send a voice message saying: “Remind me to email Rami about the internship.”
+-  “Send an email to Dr. Ahmad about the syllabus.”
+- “Label all emails from Jad as IMPORTANT.”
+- “What meetings do I have today?”
+- “Draft an email to my team about the upcoming demo.”
+- Send a voice message saying: “Remind me to email Rami about the internship.”
 
 ---
 
-## 👤 Author
+## Author
 
 **Fatima Hijazi**  
 Contact: `fatimaahijazii23@gmail.com`  
 GitHub: [fatimahijazi23](https://github.com/fatimahijazi23)
 
----
-
-## 📌 License
-
-MIT License – Free to use, modify, and distribute.
