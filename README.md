@@ -13,7 +13,9 @@ AI-Summer-Sprint-Bootcamp/
 │   ├── Mystic-Dreams/                # Dream Interpretation AI with Arabic Support
 │   ├── Group12-HealthPredictor/      # Health Score Prediction & Analysis
 │   ├── Serah-AI-Assistant/           # Smart AI Assistant with Gmail & Telegram
-│   └── CodingTheSpace-SpaceHazard/   # Space Hazard Predictor for Asteroids
+│   ├── CodingTheSpace-SpaceHazard/   # Space Hazard Predictor for Asteroids
+│   ├── FitBytes-MachineLearning/     # AI-Powered Meal Recommender System
+│   └── LayoutOptimization-DeepLearning/ # Warehouse Layout Optimization with AI
 ├── misplaced-files/                  # Files that need proper categorization
 └── README.md                         # This file
 ```
@@ -79,6 +81,30 @@ A full-stack machine learning web application that predicts whether near-Earth o
 - Flask REST API backend
 - CSV file validation and preprocessing
 - Real-time hazard prediction
+
+### 🍽️ FitBytes - AI Meal Recommender
+**Location:** `teams/FitBytes-MachineLearning/`
+**Team:** Fatima Alsayone, Alaa Abdalla, Fatima Dbouk, Sara Dbouk
+
+An AI-powered meal recommender that helps users find suitable meals based on their dietary preferences, calorie needs, and protein intake.
+
+**Key Features:**
+- Nearest Neighbor Algorithm for meal matching
+- Flask web interface with Bootstrap UI
+- Custom meal dataset with nutrition information
+- Support for various diet types (Keto, Vegan, Low Carb, etc.)
+
+### 🏭 Layout Optimization - Warehouse AI
+**Location:** `teams/LayoutOptimization-DeepLearning/`
+**Team:** Deep Learning Warehouse Team
+
+A deep learning system that optimizes warehouse layout and predicts optimal storage locations for different pallet types using neural networks.
+
+**Key Features:**
+- TensorFlow/Keras neural network model
+- Flask API for real-time predictions
+- Pallet type and demand-based optimization
+- Warehouse cell recommendation system
 
 ## 🛠️ Getting Started
 
