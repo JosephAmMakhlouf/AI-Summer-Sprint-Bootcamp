@@ -18,7 +18,6 @@ AI-Summer-Sprint-Bootcamp/
 │   ├── WarehouseTeam-LayoutOptimization/ # Warehouse Layout Optimization with AI
 │   ├── GroupLLMao-NewsAutomation/    # News4LazyDudes Telegram Bot
 │   └── Group24-DataExploration/      # Calories Prediction System
-├── misplaced-files/                  # Files that need proper categorization
 └── README.md                         # This file
 ```
 
