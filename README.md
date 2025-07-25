@@ -15,7 +15,9 @@ AI-Summer-Sprint-Bootcamp/
 │   ├── FatimaHijazi-SerahAI/         # Smart AI Assistant with Gmail & Telegram
 │   ├── CodingTheSpace-AsteroidPredictor/ # Space Hazard Predictor for Asteroids
 │   ├── FitBytesTeam-MealRecommender/ # AI-Powered Meal Recommender System
-│   └── WarehouseTeam-LayoutOptimization/ # Warehouse Layout Optimization with AI
+│   ├── WarehouseTeam-LayoutOptimization/ # Warehouse Layout Optimization with AI
+│   ├── GroupLLMao-NewsAutomation/    # News4LazyDudes Telegram Bot
+│   └── Group24-DataExploration/      # Calories Prediction System
 ├── misplaced-files/                  # Files that need proper categorization
 └── README.md                         # This file
 ```
@@ -105,6 +107,33 @@ A deep learning system that optimizes warehouse layout and predicts optimal stor
 - Flask API for real-time predictions
 - Pallet type and demand-based optimization
 - Warehouse cell recommendation system
+
+### Group LLMao - News Automation Bot
+**Location:** `teams/GroupLLMao-NewsAutomation/`
+**Team:** Group LLMao
+
+A Telegram bot called News4LazyDudes that fetches and summarizes news from Al Jazeera based on keywords or categories, featuring automated workflows with N8N.
+
+**Key Features:**
+- Keyword-based news search functionality
+- Predefined category buttons for easy navigation
+- News summarization and translation capabilities
+- Secure bot token management with environment variables
+- N8N workflow automation integration
+- Interactive inline keyboards for category selection
+
+### Group 24 - Data Exploration & Calories Prediction
+**Location:** `teams/Group24-DataExploration/`
+**Team:** Group 24
+
+A machine learning application that predicts calories burned during exercise based on personal and activity parameters using linear regression modeling.
+
+**Key Features:**
+- Streamlit web interface for user input
+- Linear regression model for calorie prediction
+- Normalized input processing for accurate predictions
+- Interactive user interface with real-time predictions
+- Support for gender, age, height, weight, duration, heart rate, and body temperature inputs
 
 ## Getting Started
 
