@@ -9,19 +9,20 @@ This repository has been organized to clearly separate each team's work:
 ```
 AI-Summer-Sprint-Bootcamp/
 ├── teams/
-│   ├── baby-cry-classifier/          # Baby Cry Sound Classification System
-│   ├── dream-interpreter/            # Dream Interpretation AI with Arabic Support
-│   ├── health-visualizer/            # Health Data Visualization & Analysis
-│   ├── n8n-novators/                 # N8N Workflow Automation Project
-│   └── coding-the-space/             # Machine Learning Project by Coding The Space
+│   ├── OBFFS/                        # Baby Cry Sound Classification System
+│   ├── Mystic-Dreams/                # Dream Interpretation AI with Arabic Support
+│   ├── Group12-HealthPredictor/      # Health Score Prediction & Analysis
+│   ├── Serah-AI-Assistant/           # Smart AI Assistant with Gmail & Telegram
+│   └── CodingTheSpace-SpaceHazard/   # Space Hazard Predictor for Asteroids
 ├── misplaced-files/                  # Files that need proper categorization
 └── README.md                         # This file
 ```
 
 ## 🏆 Team Projects
 
-### 🍼 Baby Cry Classifier
-**Location:** `teams/baby-cry-classifier/`
+### 🍼 OBFFS - Baby Cry Classifier
+**Location:** `teams/OBFFS/`
+**Team:** Mohammad Fad & Team
 
 A deep learning system that classifies baby crying sounds into different categories (hunger, discomfort, pain, tiredness, etc.). Uses multiple CNN architectures including YAMNet for audio classification.
 
@@ -30,8 +31,9 @@ A deep learning system that classifies baby crying sounds into different categor
 - Live inference demo with Flask API
 - Best performance: 65% accuracy with YAMNet
 
-### 🌙 Dream Interpreter
-**Location:** `teams/dream-interpreter/`
+### 🌙 Mystic Dreams - Dream Interpreter
+**Location:** `teams/Mystic-Dreams/`
+**Team:** N ate N (mosleima)
 
 An AI-powered dream interpretation system that processes Arabic and English dream descriptions using classical dream interpretation books.
 
@@ -41,34 +43,42 @@ An AI-powered dream interpretation system that processes Arabic and English drea
 - PDF processing of classical dream books
 - Streamlit and Flask web interfaces
 
-### 📊 Health Data Visualizer  
-**Location:** `teams/health-visualizer/`
+### 📊 Group 12 - Health Score Predictor  
+**Location:** `teams/Group12-HealthPredictor/`
+**Team:** Group 12 Health Analytics
 
-A machine learning project for health data analysis and visualization using synthetic health datasets.
-
-**Key Features:**
-- Health data visualization
-- Machine learning model for health predictions
-- Interactive Jupyter notebook analysis
-
-### 🔄 N8N Novators
-**Location:** `teams/n8n-novators/`
-
-Workflow automation project using N8N platform for creating automated business processes.
+A machine learning web application that predicts health scores based on lifestyle factors using Random Forest regression with 83% accuracy.
 
 **Key Features:**
-- Automated workflow configurations
-- JSON-based workflow definitions
+- Health score prediction based on lifestyle data
+- Multiple regression models (Linear, Ridge, Random Forest)
+- Interactive web interface with Streamlit
+- Live demo available online
 
-### 🌌 Coding The Space
-**Location:** `teams/coding-the-space/`
+### 🤖 Serah AI Assistant
+**Location:** `teams/Serah-AI-Assistant/`
+**Team:** Fatima Hijazi (fatimahijazi23)
 
-Machine learning project by the Coding The Space team with comprehensive documentation and analysis.
+An intelligent AI assistant built with N8N that automates Gmail, Google Calendar, and Telegram workflows with voice and text commands.
 
 **Key Features:**
-- Detailed project documentation
-- Machine learning models and analysis
-- Research paper and findings
+- Voice recognition with OpenAI Whisper
+- Gmail automation (send, reply, label, delete)
+- Google Calendar integration
+- Telegram bot interface
+- Fluent in Lebanese Arabic and English
+
+### 🌌 Coding The Space - Space Hazard Predictor
+**Location:** `teams/CodingTheSpace-SpaceHazard/`
+**Team:** Ali Kawar, Hanine Khalil, Aya Rayed, Samira Jawish, Jinan Rachid, Batoul Hamieh
+
+A full-stack machine learning web application that predicts whether near-Earth objects (asteroids) are hazardous using NASA data.
+
+**Key Features:**
+- Random Forest classifier with 99% accuracy
+- Flask REST API backend
+- CSV file validation and preprocessing
+- Real-time hazard prediction
 
 ## 🛠️ Getting Started
 
