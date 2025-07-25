@@ -12,7 +12,7 @@ AI-Summer-Sprint-Bootcamp/
 │   ├── OBFFS-BabyCryClassifier/      # Baby Cry Sound Classification System
 │   ├── NateN-DreamInterpreter/       # Dream Interpretation AI with Arabic Support
 │   ├── Group12-HealthPredictor/      # Health Score Prediction & Analysis
-│   ├── FatimaHijazi-SerahAI/         # Smart AI Assistant with Gmail & Telegram
+│   ├── N8Nnovators-N8n/              # Smart AI Assistant with Gmail & Telegram
 │   ├── CodingTheSpace-AsteroidPredictor/ # Space Hazard Predictor for Asteroids
 │   ├── FitBytesTeam-MealRecommender/ # AI-Powered Meal Recommender System
 │   ├── WarehouseTeam-LayoutOptimization/ # Warehouse Layout Optimization with AI
@@ -59,9 +59,9 @@ A machine learning web application that predicts health scores based on lifestyl
 - Interactive web interface with Streamlit
 - Live demo available online
 
-### Fatima Hijazi - Serah AI Assistant
-**Location:** `teams/FatimaHijazi-SerahAI/`
-**Team:** Fatima Hijazi (fatimahijazi23)
+### N8Nnovators - N8n AI Assistant
+**Location:** `teams/N8Nnovators-N8n/`
+**Team:** N8Nnovators (Fatima Hijazi)
 
 An intelligent AI assistant built with N8N that automates Gmail, Google Calendar, and Telegram workflows with voice and text commands.
 
